@@ -1,32 +1,43 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
+# coding=utf-8
 
-captura_inicial = []
-
-captura_final = []
+Ruta = []
 
 Ciudad = [] 
 
 def Validar_Ciudad(linea):
-    Texto = '' ; contador = 0 
+    Texto = '' ; Ruta = " " 
     for i in linea:
+        #SACA LOS DATOS DE LAS CIUDADES
         if i.isalpha()==True:
             Texto = Texto + i
         if i == " ":
             Texto = Texto + " ";
         if i.isnumeric()==True:
             if Texto!=" ":
-                contador = contador + 1; 
-                print(contador," . ",Texto)
+                Ciudad.append(Texto)
                 Texto = " ";
 
-def Validar_Numero_Final(numero):
-    completo = ''
-    for i in numero:
-        if i==',' or i==';':
-            captura_final.append(completo)
-            completo=''
-        else:
-            completo +=i
+
+
+def Validar_Recorrido(linea):
+    inicio = 0 ; final = 0 ; ruta = '' ;
+    for i in range(len(linea)):
+        if linea[i].isnumeric()==True:
+            inicio = i
+            break
+    for i in range(len(linea)):
+        if linea[i]=="\n":
+            final = i ;
+            print('este es el valor final : ',final)
+            break
+    for j in range(inicio,final):
+        ruta = ruta + linea[j] ; 
+    Ruta.append(ruta)
+    ruta = '';
+    
+
+
 
 
 def Crear():
@@ -46,9 +57,10 @@ def Escribir():
 def Leer():
     try:
         contador = 0;    
-        archivo = open("set1.txt","r")
+        archivo = open("set1.txt","r",encoding="utf-8")
         for linea in archivo:
             Validar_Ciudad(linea)
+            Validar_Recorrido(linea)
     except FileNotFoundError:
         print ("NO EXISTE EL ARCHIVO")
 
@@ -66,9 +78,7 @@ def Leer_1():
 
 if __name__ == "__main__":
     Leer()
-    #print('ESTAS SON LAS CIUDADES : ',Ciudad)
     
-    
-    
-    
-    #Leer_1()
+   # for i in Ruta:
+    #    print('esta es la ruta : ',i)
+
