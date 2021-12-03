@@ -63,12 +63,14 @@ def Leer():
     except FileNotFoundError:
         print ("NO EXISTE EL ARCHIVO")
 
-
-
-
-if __name__ == "__main__":
+def LLenar_vector():
     Leer()
     for i in range(len(dato)):
         Validar_Ciudad(dato[i])
         Validar_Ruta(dato[i])
-    
+
+
+if __name__ == "__main__":
+    LLenar_vector()
+    print('CIUDAD : ',Ciudad)
+    print('Ruta : ',Ruta)
