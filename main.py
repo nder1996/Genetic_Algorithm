@@ -5,80 +5,70 @@ Ruta = []
 
 Ciudad = [] 
 
+dato_final = '';
+
+num = ["0","1","2","3","4","5","6","7","8","9"]
+
+
+dato = []
+
+
+def Depurar(lista):
+    for i in lista:
+        if i != "":
+            Ciudad.append(i)
+            #print('este es el valor de la ciudad : ',i)
+
+
+
 def Validar_Ciudad(linea):
-    Texto = '' ; Ruta = " " 
-    for i in linea:
-        #SACA LOS DATOS DE LAS CIUDADES
-        if i.isalpha()==True:
-            Texto = Texto + i
-        if i == " ":
-            Texto = Texto + " ";
-        if i.isnumeric()==True:
-            if Texto!=" ":
-                Ciudad.append(Texto)
-                Texto = " ";
-
-
-
-def Validar_Recorrido(linea):
-    inicio = 0 ; final = 0 ; ruta = '' ;
+    texto = '' ; tipo = ""; nombre_ciudad = []
     for i in range(len(linea)):
-        if linea[i].isnumeric()==True:
-            inicio = i
-            break
+        if linea[i].isalpha() == True:
+            texto = texto + linea[i]
+        if linea[i]==" ":
+            for j in range(i,len(linea)):
+                if linea[j]!=" ":
+                    if num.count(linea[j]) == 0:
+                        tipo = "str"
+                    else:
+                        tipo = "int"
+                    break
+            if tipo == 'str':
+                texto = texto + " ";
+            else:
+                nombre_ciudad.append(texto)
+                texto = ''
+    Depurar(nombre_ciudad)
+                
+
+def Validar_Ruta(linea):
+    ruta = ""
     for i in range(len(linea)):
-        if linea[i]=="\n":
-            final = i ;
-            print('este es el valor final : ',final)
-            break
-    for j in range(inicio,final):
-        ruta = ruta + linea[j] ; 
+        if num.count(linea[i]) != 0:
+            ruta = ruta + linea[i] ;
+        if linea[i] == ',':
+            ruta = ruta + ','
+            Ruta.append(ruta)
+            ruta = '';
+    #print('este es el valor de la ruta : ',ruta)
     Ruta.append(ruta)
-    ruta = '';
-    
-
-
-
-
-def Crear():
-    archivo = open("inicial.txt","w")
-    archivo.close()
-
-def Escribir():
-    try:
-        archivo = open("inicial.txt")
-        print("escribe un texto")
-        cadena = input()
-        archivo.write(cadena+'\n')
-        archivo.close()
-    except FileNotFoundError:
-        print ("NO EXISTE EL ARCHIVO")
 
 def Leer():
     try:
         contador = 0;    
         archivo = open("set1.txt","r",encoding="utf-8")
         for linea in archivo:
-            Validar_Ciudad(linea)
-            Validar_Recorrido(linea)
+            dato.append(linea)
     except FileNotFoundError:
         print ("NO EXISTE EL ARCHIVO")
 
-def Leer_1():
-    try:    
-        archivo = open("final.txt")
-        linea = archivo.readline()
-        while(linea):
-            Validar_Numero_Final(linea)
-            linea = archivo.readline()
-        archivo.close()
-    except FileNotFoundError:
-        print ("NO EXISTE EL ARCHIVO")
+
 
 
 if __name__ == "__main__":
     Leer()
+    for i in range(len(dato)):
+        Validar_Ciudad(dato[i])
+        Validar_Ruta(dato[i])
     
-   # for i in Ruta:
-    #    print('esta es la ruta : ',i)
-
